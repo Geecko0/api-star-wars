@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { memo } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Content from './components/content';
+import Footer from './components/footer';
+import Header from './components/header';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { classicNameResolver } from 'typescript';
 
-function App() {
+const style = makeStyles(() =>
+  createStyles({
+    root: {
+      width: '100%',
+      backgroundColor: '#282c34',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      fontSize: 'calc(10px + 2vmin)',
+      color: 'white'
+    }
+  })
+);
+
+const App = () => {
+  const classes = style();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.root}>
+      <Header />
+      <Content />
+      <Footer />
     </div>
   );
-}
+};
 
-export default App;
+export default memo(App);
