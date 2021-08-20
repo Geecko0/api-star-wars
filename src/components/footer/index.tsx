@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
+import style from './style';
 
 const Footer = () => {
-  return <div>Hello World!!!</div>;
+  const classes = style();
+  return <div className={classes.root}>Hello World!!!</div>;
 };
 
 export default memo(Footer);
