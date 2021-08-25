@@ -4,9 +4,11 @@ const style = makeStyles(() =>
   createStyles({
     root: {
       width: '100%',
-      textAlign: 'center',
+      justifyContent: 'center',
       height: 64,
-      backgroundColor: '#cdcdcd'
+      backgroundColor: '#cdcdcd',
+      display: 'flex',
+      alignItems: 'center'
     }
   })
 );

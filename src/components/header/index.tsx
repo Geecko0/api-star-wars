@@ -4,7 +4,7 @@ import style from './style';
 const Header = () => {
   const classes = style();
 
-  return <div className={classes.root}>Star Wars Cyclopedia</div>;
+  return <div className={classes.root}>Enciclopédia Star Wars</div>;
 };
 
 export default memo(Header);

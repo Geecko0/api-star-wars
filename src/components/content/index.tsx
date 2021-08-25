@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import style from './style';
 import useForm from '@eduzz/houston-forms/useForm';
 import Container from '@eduzz/houston-ui/Grid/Container';
@@ -7,12 +7,14 @@ import Row from '@eduzz/houston-ui/Grid/Row';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 import SelectField from '@eduzz/houston-ui/Forms/Select';
 import Button from '@eduzz/houston-ui/Button';
+import ICategory from '../../interfaces/category';
+import api from '../../services/api';
 
 const Content = () => {
   const classes = style();
   const [text, setText] = React.useState('');
   const [textSelect, setTextSelect] = React.useState('');
-  const [options] = React.useState(() => [
+  const [options] = React.useState<ICategory[]>(() => [
     { value: 1, label: 'Filmes' },
     { value: 2, label: 'Pessoas' },
     { value: 3, label: 'Planetas' },
@@ -20,6 +22,12 @@ const Content = () => {
     { value: 5, label: 'Naves' },
     { value: 6, label: 'Veículos' }
   ]);
+
+  useEffect(() => {
+    api.get('people').then(result => {
+      console.log(result);
+    });
+  });
 
   return (
     <div className={classes.root}>
