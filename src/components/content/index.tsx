@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import style from './style';
 import useForm from '@eduzz/houston-forms/useForm';
 import Container from '@eduzz/houston-ui/Grid/Container';
@@ -9,12 +9,13 @@ import SelectField from '@eduzz/houston-ui/Forms/Select';
 import Button from '@eduzz/houston-ui/Button';
 import ICategory from '../../interfaces/category';
 import api from '../../services/api';
+import BasicCard from 'components/card';
 
 const Content = () => {
   const classes = style();
-  const [text, setText] = React.useState('');
-  const [textSelect, setTextSelect] = React.useState('');
-  const [options] = React.useState<ICategory[]>(() => [
+  const [text, setText] = useState('');
+  const [textSelect, setTextSelect] = useState('');
+  const [options] = useState<ICategory[]>(() => [
     { value: 1, label: 'Filmes' },
     { value: 2, label: 'Pessoas' },
     { value: 3, label: 'Planetas' },
@@ -22,10 +23,11 @@ const Content = () => {
     { value: 5, label: 'Naves' },
     { value: 6, label: 'Veículos' }
   ]);
+  const [people, setPeople] = useState<any[]>([]);
 
   useEffect(() => {
-    api.get('people').then(result => {
-      console.log(result);
+    api.get('people').then((result: unknown) => {
+      setPeople(result as any[]);
     });
   });
 
@@ -47,6 +49,18 @@ const Content = () => {
           </Column>
           <Column xs={3}>
             <Button className='filterButton'>Pesquisar</Button>
+          </Column>
+        </Row>
+        <Row>
+          <Column xs={12}>
+            {people.map((value: any) => {
+              console.log(value);
+              return (
+                <BasicCard title={value.name}>
+                  <>{value.planets}</>
+                </BasicCard>
+              );
+            })}
           </Column>
         </Row>
       </Container>

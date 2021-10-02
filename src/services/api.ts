@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { promises } from 'dns';
 
-const get = async (url: string, params?: any, headers?: any) => {
+const get = async <T = any>(url: string, params?: any, headers?: any): Promise<AxiosResponse<T>> => {
   return await request({ url, method: 'GET', params, headers });
 };
 
@@ -15,7 +14,7 @@ const handleError = (): Promise<AxiosResponse<any> | null> => {
   return Promise.resolve(null);
 };
 
-const request = async (options: AxiosRequestConfig): Promise<AxiosResponse<any> | null> => {
+const request = async (options: AxiosRequestConfig): Promise<AxiosResponse<any>> => {
   try {
     const result = await axios({
       ...options,
