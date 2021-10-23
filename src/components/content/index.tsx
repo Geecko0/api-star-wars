@@ -1,20 +1,22 @@
 import React, { memo, useEffect, useState } from 'react';
-import style from './style';
-import useForm from '@eduzz/houston-forms/useForm';
-import Container from '@eduzz/houston-ui/Grid/Container';
-import Column from '@eduzz/houston-ui/Grid/Column';
-import Row from '@eduzz/houston-ui/Grid/Row';
-import TextField from '@eduzz/houston-ui/Forms/Text';
-import SelectField from '@eduzz/houston-ui/Forms/Select';
+
+import BasicCard from 'components/card';
+
 import Button from '@eduzz/houston-ui/Button';
+import SelectField from '@eduzz/houston-ui/Forms/Select';
+import TextField from '@eduzz/houston-ui/Forms/Text';
+import Column from '@eduzz/houston-ui/Grid/Column';
+import Container from '@eduzz/houston-ui/Grid/Container';
+import Row from '@eduzz/houston-ui/Grid/Row';
+
 import ICategory from '../../interfaces/category';
 import api from '../../services/api';
-import BasicCard from 'components/card';
+import style from './style';
 
 const Content = () => {
   const classes = style();
   const [text, setText] = useState('');
-  const [textSelect, setTextSelect] = useState('');
+  const [textSelect, setTextSelect] = useState(2); //...
   const [options] = useState<ICategory[]>(() => [
     { value: 1, label: 'Filmes' },
     { value: 2, label: 'Pessoas' },
@@ -26,16 +28,17 @@ const Content = () => {
   const [people, setPeople] = useState<any[]>([]);
 
   useEffect(() => {
-    api.get('people').then((result: unknown) => {
-      setPeople(result as any[]);
+    api.get('people').then((result: any) => {
+      console.log(result);
+      setPeople(result.data.results as any[]);
     });
-  });
+  }, []);
 
   return (
     <div className={classes.root}>
       <Container>
         <Row alignItems='baseline'>
-          <Column xs={2}>
+          <Column xs={12} md={2}>
             <SelectField
               label='Seleção'
               emptyOption='Selecione...'
@@ -44,24 +47,24 @@ const Content = () => {
               onChange={setTextSelect}
             ></SelectField>
           </Column>
-          <Column xs={7}>
+          <Column xs={12} md={7}>
             <TextField label='Campo de Texto' value={text} onChange={setText}></TextField>
           </Column>
-          <Column xs={3}>
+          <Column xs={12} md={3}>
             <Button className='filterButton'>Pesquisar</Button>
           </Column>
         </Row>
         <Row>
-          <Column xs={12}>
-            {people.map((value: any) => {
-              console.log(value);
-              return (
+          {people.map((value: any, index: number) => {
+            console.log(value);
+            return (
+              <Column xs={12} md={3} key={index}>
                 <BasicCard title={value.name}>
                   <>{value.planets}</>
                 </BasicCard>
-              );
-            })}
-          </Column>
+              </Column>
+            );
+          })}
         </Row>
       </Container>
     </div>

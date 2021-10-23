@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+
 import Content from './components/content';
 import Footer from './components/footer';
 import Header from './components/header';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { classicNameResolver } from 'typescript';
 
 const style = makeStyles(() =>
   createStyles({

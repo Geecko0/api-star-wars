@@ -11,7 +11,7 @@
     ],
     "sourceMap": true,
     "allowJs": false,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "types": [
       "react",
       "react-dom",
