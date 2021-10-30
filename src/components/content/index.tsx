@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 
 import BasicCard from 'components/card';
+import Details from 'components/details';
 
 import Button from '@eduzz/houston-ui/Button';
 import SelectField from '@eduzz/houston-ui/Forms/Select';
@@ -16,6 +17,7 @@ import style from './style';
 const Content = () => {
   const classes = style();
   const [text, setText] = useState('');
+  const [detailModal, setDetailModal] = useState(false);
   const [textSelect, setTextSelect] = useState(2); //...
   const [options] = useState<ICategory[]>(() => [
     { value: 1, label: 'Filmes' },
@@ -60,13 +62,17 @@ const Content = () => {
             return (
               <Column xs={12} md={3} key={index}>
                 <BasicCard title={value.name}>
-                  <>{value.planets}</>
+                  <div>{value.gender !== 'n/a' ? <>Gender: {value.gender}</> : 'Gender: genderless'}</div>
+                  <div>Height: {value.height} cm</div>
+                  <div>Mass: {value.mass} Kg</div>
+                  <Button onClick={() => setDetailModal(true)}>Ver detalhes</Button>
                 </BasicCard>
               </Column>
             );
           })}
         </Row>
       </Container>
+      {detailModal && <Details />}
     </div>
   );
 };
