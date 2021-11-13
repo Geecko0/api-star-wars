@@ -5,11 +5,36 @@ const useStyles = makeStyles(() => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    p: 4
+    transform: 'translate(-51.5%, -50%)',
+    backgroundColor: '#fff',
+    borderRadius: 4,
+    padding: 20,
+    maxWidth: 'calc(100% - 24px)',
+    overflow: 'auto',
+    marginRight: 15,
+
+    '& .header': {
+      display: 'flex',
+      flexDirection: 'row-reverse',
+      justifyContent: 'space-between',
+
+      '& .close': {
+        zIndex: 100,
+
+        '& .MuiIconButton-root': {
+          padding: 0
+        },
+
+        '& span': {
+          color: '#f00',
+          fontSize: 16
+        }
+      }
+    },
+
+    '& .content': {
+      width: '100%'
+    }
   }
 }));
 

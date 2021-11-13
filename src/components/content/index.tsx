@@ -72,7 +72,7 @@ const Content = () => {
           })}
         </Row>
       </Container>
-      {detailModal && <Details />}
+      {detailModal && <Details open={detailModal} handleClose={() => setDetailModal(false)} />}
     </div>
   );
 };
