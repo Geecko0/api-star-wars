@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 
 import BasicCard from 'components/card';
 import Details from 'components/details';
+import IItem from 'interfaces/item';
 
 import Button from '@eduzz/houston-ui/Button';
 import SelectField from '@eduzz/houston-ui/Forms/Select';
@@ -20,14 +21,20 @@ const Content = () => {
   const [detailModal, setDetailModal] = useState(false);
   const [textSelect, setTextSelect] = useState(2); //...
   const [options] = useState<ICategory[]>(() => [
-    { value: 1, label: 'Filmes' },
-    { value: 2, label: 'Pessoas' },
-    { value: 3, label: 'Planetas' },
-    { value: 4, label: 'Espécies' },
-    { value: 5, label: 'Naves' },
-    { value: 6, label: 'Veículos' }
+    { value: 1, label: 'films' },
+    { value: 2, label: 'people' },
+    { value: 3, label: 'planets' },
+    { value: 4, label: 'species' },
+    { value: 5, label: 'starships' },
+    { value: 6, label: 'vehicles' }
   ]);
   const [people, setPeople] = useState<any[]>([]);
+  const [item, setItem] = useState<IItem>({} as IItem);
+
+  const openModal = (item: IItem) => {
+    setItem(item);
+    setDetailModal(true);
+  };
 
   useEffect(() => {
     api.get('people').then((result: any) => {
@@ -65,14 +72,14 @@ const Content = () => {
                   <div>{value.gender !== 'n/a' ? <>Gender: {value.gender}</> : 'Gender: genderless'}</div>
                   <div>Height: {value.height} cm</div>
                   <div>Mass: {value.mass} Kg</div>
-                  <Button onClick={() => setDetailModal(true)}>Ver detalhes</Button>
+                  <Button onClick={() => openModal(value)}>Ver detalhes</Button>
                 </BasicCard>
               </Column>
             );
           })}
         </Row>
       </Container>
-      {detailModal && <Details open={detailModal} handleClose={() => setDetailModal(false)} />}
+      {detailModal && <Details open={detailModal} handleClose={() => setDetailModal(false)} item={item} />}
     </div>
   );
 };
