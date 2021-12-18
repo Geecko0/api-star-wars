@@ -24,7 +24,7 @@ const request = async (options: AxiosRequestConfig): Promise<AxiosResponse<any>>
   try {
     return await axios({
       ...options,
-      baseURL: 'https://swapi.dev/api/',
+      baseURL: 'https://www.swapi.tech/api/',
       headers: {
         'Content-type': 'application/json',
         ...options.headers
