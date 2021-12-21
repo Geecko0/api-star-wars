@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import SelectField from '@mui/material/Select';
 
@@ -26,15 +25,11 @@ const Filter = () => {
     <>
       <Column xs={12} md={2}>
         <FormControl fullWidth>
-          <InputLabel id='select-option-label'>Selecione...</InputLabel>
           <SelectField
             labelId='select-option-label'
             value={textSelect}
             onChange={e => setTextSelect(Number(e.target.value))}
           >
-            <MenuItem value=''>
-              <em>Opções</em>
-            </MenuItem>
             {options.map((option, index) => {
               return (
                 <MenuItem key={index} value={option.value}>
