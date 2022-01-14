@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +10,11 @@ import Column from '@eduzz/houston-ui/Grid/Column';
 
 import ICategory from '../../interfaces/category';
 
-const Filter = () => {
+interface IProps {
+  setSelectValue: Dispatch<SetStateAction<string>>;
+}
+
+const Filter = ({ setSelectValue }: IProps) => {
   const [text, setText] = useState('');
   const [textSelect, setTextSelect] = useState(2); //...
   const [options] = useState<ICategory[]>(() => [
@@ -21,6 +25,20 @@ const Filter = () => {
     { value: 5, label: 'starships' },
     { value: 6, label: 'vehicles' }
   ]);
+
+  const setSelect = useCallback(
+    (id: number) => {
+      setTextSelect(id);
+      setSelectValue(
+        options.reduce((acc, item) => {
+          if (item.value === id) return item.label;
+          return acc;
+        }, '')
+      );
+    },
+    [options, setSelectValue]
+  );
+
   return (
     <>
       <Column xs={12} md={2}>
@@ -28,7 +46,7 @@ const Filter = () => {
           <SelectField
             labelId='select-option-label'
             value={textSelect}
-            onChange={e => setTextSelect(Number(e.target.value))}
+            onChange={e => setSelect(Number(e.target.value))}
           >
             {options.map((option, index) => {
               return (

@@ -7,7 +7,10 @@ interface IFilterContext {
 }
 
 interface IProps {
+  select: string;
+  search: string;
   children: React.ReactNode;
+  setValue: () => null;
 }
 
 const FilterContext = React.createContext<IFilterContext>({
@@ -16,10 +19,8 @@ const FilterContext = React.createContext<IFilterContext>({
   setValue: () => null
 });
 
-export const FilterProvider = memo(({ children }: IProps) => {
-  const [value, setValue] = React.useState<{ select: string; search: string }>({ select: '', search: '' });
-
-  return <FilterContext.Provider value={{ ...value, setValue }}>{children}</FilterContext.Provider>;
+export const FilterProvider = memo(({ children, select, search, setValue }: IProps) => {
+  return <FilterContext.Provider value={{ select, search, setValue }}>{children}</FilterContext.Provider>;
 });
 
 export default FilterContext;

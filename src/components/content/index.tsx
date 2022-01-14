@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 
 import BasicCard from 'components/card';
+import { FilterProvider } from 'components/context';
 import Details from 'components/details';
 import Filter from 'components/filter';
 import IItem from 'interfaces/item';
@@ -18,6 +19,7 @@ const Content = () => {
 
   const [detailModal, setDetailModal] = useState(false);
 
+  const [select, setSelect] = useState<string>('people');
   const [people, setPeople] = useState<any[]>([]);
   const [item, setItem] = useState<IItem>({} as IItem);
 
@@ -27,35 +29,37 @@ const Content = () => {
   };
 
   useEffect(() => {
-    api.get('people').then((result: any) => {
+    api.get(select).then((result: any) => {
       console.log(result);
       setPeople(result.data.results as any[]);
     });
-  }, []);
+  }, [select]);
 
   return (
     <div className={classes.root}>
-      <Container>
-        <Row alignItems='baseline'>
-          <Filter />
-        </Row>
-        <Row>
-          {people.map((value: any, index: number) => {
-            console.log(value);
-            return (
-              <Column xs={12} md={3} key={index}>
-                <BasicCard title={value.name}>
-                  <div>{value.gender !== 'n/a' ? <>Gender: {value.gender}</> : 'Gender: genderless'}</div>
-                  <div>Height: {value.height} cm</div>
-                  <div>Mass: {value.mass} Kg</div>
-                  <Button onClick={() => openModal(value)}>Ver detalhes</Button>
-                </BasicCard>
-              </Column>
-            );
-          })}
-        </Row>
-      </Container>
-      {detailModal && <Details open={detailModal} handleClose={() => setDetailModal(false)} item={item} />}
+      <FilterProvider search='' select='' setValue={() => null}>
+        <Container>
+          <Row alignItems='baseline'>
+            <Filter setSelectValue={setSelect} />
+          </Row>
+          <Row>
+            {people.map((value: any, index: number) => {
+              console.log(value);
+              return (
+                <Column xs={12} md={3} key={index}>
+                  <BasicCard title={value.name}>
+                    <div>{value.gender !== 'n/a' ? <>Gender: {value.gender}</> : 'Gender: genderless'}</div>
+                    <div>Height: {value.height} cm</div>
+                    <div>Mass: {value.mass} Kg</div>
+                    <Button onClick={() => openModal(value)}>Ver detalhes</Button>
+                  </BasicCard>
+                </Column>
+              );
+            })}
+          </Row>
+        </Container>
+        {detailModal && <Details open={detailModal} handleClose={() => setDetailModal(false)} item={item} />}
+      </FilterProvider>
     </div>
   );
 };
