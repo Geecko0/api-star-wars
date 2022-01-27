@@ -16,10 +16,10 @@ interface IProps {
 
 const Filter = ({ setSelectValue }: IProps) => {
   const [text, setText] = useState('');
-  const [textSelect, setTextSelect] = useState(2); //...
+  const [textSelect, setTextSelect] = useState(1); //...
   const [options] = useState<ICategory[]>(() => [
-    { value: 1, label: 'films' },
-    { value: 2, label: 'people' },
+    { value: 1, label: 'people' },
+    { value: 2, label: 'films' },
     { value: 3, label: 'planets' },
     { value: 4, label: 'species' },
     { value: 5, label: 'starships' },

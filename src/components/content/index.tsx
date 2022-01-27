@@ -29,9 +29,13 @@ const Content = () => {
   };
 
   useEffect(() => {
-    api.get(select).then((result: any) => {
-      console.log(result);
-      setPeople(result.data.results as any[]);
+    api.get(select).then((res: any) => {
+      if (select === 'films') {
+        console.log(res);
+        setPeople(res.data.result as any[]);
+        return;
+      }
+      setPeople(res.data.results as any[]);
     });
   }, [select]);
 
@@ -44,7 +48,6 @@ const Content = () => {
           </Row>
           <Row>
             {people.map((value: any, index: number) => {
-              console.log(value);
               return (
                 <Column xs={12} md={3} key={index}>
                   <BasicCard title={value.name}>
