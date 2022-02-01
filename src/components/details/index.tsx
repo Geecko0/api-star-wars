@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import IItem from 'interfaces/item';
+import api from 'services/api';
 
 import useStyles from './style';
 
 interface IProps {
   open: boolean;
   handleClose: () => void;
-  item: IItem;
+  value: IItem;
 }
 
-const Details = ({ open, handleClose, item }: IProps) => {
+const Details = ({ open, handleClose, value }: IProps) => {
   const classes = useStyles();
+  const [item, setItem] = useState<IItem>({} as IItem);
+  useEffect(() => {
+    api.get(value.url?.substring(21) || '').then((res: any) => {
+      setItem(res);
+    });
+  }, [value]);
+  console.log(item);
   return (
     <div>
       <Modal
